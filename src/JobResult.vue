@@ -1,5 +1,6 @@
 <template>
   <div class="c-job-result">
+    <c-sources></c-sources>
     <h2 class="c-job-result__title">
       <span v-if="jobs === 0">Le CICE a créé <span class="c--red">0</span> emplois</span>
       <span v-if="jobs !== 0">
@@ -13,7 +14,7 @@
       </div>
       <div class="c-job-result__details__separator"></div>
       <div class="c-job-result__details__jobs">
-        <h3 class="c-job-result__details__jobs__title">Nombre d'emplois créés</h3>
+        <h3 class="c-job-result__details__jobs__title">Emplois</h3>
         <div v-for="job in details">{{ job.jobs }}</div>
       </div>
     </div>
@@ -24,7 +25,7 @@
       </div>
       <div class="c-job-result__details__separator"></div>
       <div class="c-job-result__details__jobs">
-        <h3 class="c-job-result__details__jobs__title">Nombre d'emplois :</h3>
+        <h3 class="c-job-result__details__jobs__title">Emplois</h3>
         <div v-for="company in cice">{{ company.jobs }}</div>
       </div>
       <div class="c-job-result__details__separator"></div>
@@ -41,8 +42,9 @@
 
 .c-job-result {
   display: flex;
-  flex: 1;
   flex-direction: column;
+  min-height: 320px;
+  position: relative;
 }
 
 .c-job-result__title {
@@ -70,14 +72,47 @@
 .c-job-result__details__names__title, .c-job-result__details__jobs__title {
   margin-top: 0;
 }
+
+@media (max-width: 500px) {
+  .c-job-result {
+    min-height: 240px;
+  }
+
+  .c-job-result__title {
+    font-size: 16px;
+    margin: 40px 0
+  }
+
+  .c-job-result__title .c--red {
+    display: block;
+  }
+
+  .c-job-result__details {
+    font-size: 14px;
+  }
+
+  .c-job-result__details__separator {
+    margin: 0 14px;
+  }
+
+  .c-job-result__details__names__title, .c-job-result__details__jobs__title {
+    font-size: 10px;
+  }
+}
 </style>
 
 <script>
 import { totalCICE } from './joblist'
 import cice from './cice'
 
+import CSources from './Sources.vue'
+
 export default {
   props: ['joblist'],
+
+  components: {
+    CSources
+  },
 
   data() {
     return {
