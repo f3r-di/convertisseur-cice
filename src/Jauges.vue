@@ -2,8 +2,9 @@
   <div class="c-jauges" v-if="isShown">
     <h2 class="c-jauges__title">Définis tes prioritées !</h2>
     <div class="c-jauges__jauge" v-for="(job, index) in joblist">
-      <div v-if="job.active">
+      <div v-if="job.active" style="position: relative;">
         <h3 class="c-jauges__jauge__title">{{ job.plural }} : {{ job.progress.value | billions }} milliards</h3>
+        <c-pop-over :job="job"></c-pop-over>
         <input
           type="range"
           min="0"
@@ -67,8 +68,14 @@
 <script>
 import { totalCICE } from './joblist'
 
+import CPopOver from './PopOver.vue'
+
 export default {
   props: ['joblist'],
+
+  components: {
+    CPopOver
+  },
 
   computed: {
     isShown() {
